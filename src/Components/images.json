@@ -1,0 +1,32 @@
+{
+    "1":{
+        "../boat.png":"../boatshadow.png",
+        "../jar.png":"../jarshadow.png",
+        "../a3.png":"../a3.png",
+        "../a4.png":"../a4.png"
+    },
+    "2":{
+        "../a1.png":"../a1.png",
+        "../a2.png":"../a2.png",
+        "../images/bell.png":"../images/bellshadow.png",
+        "../images/bottle.png":"../images/bottleshadow.png"
+    },
+    "3":{
+        "../images/bulb.png":"../images/bulbshadow.png",
+        "../images/fruit.png":"../images/fruitshadow.png",
+        "../images/giraffe.png":"../images/giraffeshadow.png",
+        "../images/guitar.png":"../images/guitarshadow.png"
+    },
+    "4":{
+        "../images/icecream.png":"../images/icecreamshadow.png",
+        "../images/rollerskate.png":"../images/rollerskateshadow.png",
+        "../images/shoe.png":"../images/shoeshadow.png",
+        "../images/shooter.png":"../images/shootershadow.png"
+    },
+    "5":{
+        "../images/snowman.png":"../images/snowmanshadow.png",
+        "../images/tower.png":"../images/towershadow.png",
+        "../images/a3.png":"../images/a3.png",
+        "../images/a4.png":"../images/a4.png"
+    }
+}

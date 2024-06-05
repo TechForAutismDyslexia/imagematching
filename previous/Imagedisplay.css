@@ -1,0 +1,50 @@
+body{
+  background-color: rgb(76, 255, 176);
+
+}
+.title {
+  text-align: center;
+  color:rgb(2, 2, 2);
+}
+
+.data-container {
+  margin-left: 60px;
+  margin-right: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20%; /* Adjust the gap between keys, message, and values */
+  padding: 20px;
+  border:3px solid wheat;
+  border-radius: 30px;
+  background-color: rgb(76, 255, 246);
+}
+
+
+.keys-column, .values-column, .middle-message {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.image-box {
+  width: 100px;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 0px solid #ccc;
+  margin: 10px 0;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.image-box img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: cover;
+}
+.image-box:active{
+  cursor:move;
+}
+
