@@ -65,28 +65,36 @@ const Imagedisplay = () => {
   const [tries, setTries] = useState(0);
 
   useEffect(() => {
-    const pageData = jsonData[currentPage];
-    if (pageData) {
-      setData(pageData);
-      setKeys(shuffleArray(Object.keys(pageData)));
-      setValues(shuffleArray(Object.values(pageData)));
-      setMatchedKeys([]);
-      setMatchedValues([]);
-      setShowConfetti(false);
-      setTries(0);
-      console.log(`Loaded data for page ${currentPage}`, pageData); // Debugging log
-    } else {
-      console.error(`No data found for page ${currentPage}`); // Error handling
-    }
+    const loadImages = async () => {
+      const pageData = jsonData[currentPage];
+      if (pageData) {
+        const loadedData = {};
+        await Promise.all(
+          Object.entries(pageData).map(async ([key, value]) => {
+            const importedKey = await import(`${key}`);
+            const importedValue = await import(`${value}`);
+            loadedData[importedKey.default] = importedValue.default;
+          })
+        );
+        setData(loadedData);
+        setKeys(shuffleArray(Object.keys(loadedData)));
+        setValues(shuffleArray(Object.values(loadedData)));
+        setMatchedKeys([]);
+        setMatchedValues([]);
+        setShowConfetti(false);
+        setTries(0);
+      } else {
+        console.error(`No data found for page ${currentPage}`);
+      }
+    };
+
+    loadImages();
   }, [currentPage]);
 
   const handleDrop = (draggedSrc, droppedSrc) => {
     setTries(prevTries => prevTries + 1);
     const matchedKey = Object.keys(data).find(key => data[key] === droppedSrc);
-    console.log(`Matched key for ${droppedSrc}: ${matchedKey}`); // Debugging log
-    console.log(`Dropped ${draggedSrc} on ${droppedSrc}`); // Debugging log
     if (matchedKey === draggedSrc) {
-
       setMatchedKeys((prevMatchedKeys) => [...prevMatchedKeys, draggedSrc]);
       setMatchedValues((prevMatchedValues) => [...prevMatchedValues, droppedSrc]);
       setShowConfetti(true);
@@ -99,13 +107,11 @@ const Imagedisplay = () => {
       setKeys([]);
       setValues([]);
       setCurrentPage((prevPage) => prevPage + 1);
-      console.log(matchedKeys);
-      console.log(matchedValues);
     }
   };
 
-  const handleRestart = () => {
-    setCurrentPage(1);
+  const logdata = () => {
+    console.log(tries);
   };
 
   return (
@@ -142,14 +148,14 @@ const Imagedisplay = () => {
         {showConfetti && <Confetti width={window.innerWidth} height={window.innerHeight} />}
         {currentPage < Object.keys(jsonData).length ? (
           <div className='d-flex justify-content-center align-items-center'>
-            <button onClick={handleNextPage} className="btn btn-primary mt-2">
+            <button onClick={handleNextPage} id='nextbutton' className="btn btn-custom mt-2">
               Next
             </button>
           </div>
         ) : (
-          <div>
-            <button onClick={handleRestart} className="btn btn-primary mt-5">
-              Restart
+          <div className='d-flex justify-content-center align-items-center'>
+            <button onClick={logdata} id='logdata' className="btn btn-custom mt-2">
+              Logdata
             </button>
           </div>
         )}
