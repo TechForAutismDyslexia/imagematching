@@ -47,4 +47,11 @@ body{
 .image-box:active{
   cursor:move;
 }
-
+#nextbutton,#logdata{
+  background-color: #ec8f0c;
+  color: white;
+  font : bold;
+  width:120px;
+  border-radius: 20px;
+  transition: all 0.2s ease;
+}

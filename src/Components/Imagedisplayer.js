@@ -5,7 +5,9 @@ import { TouchBackend } from 'react-dnd-touch-backend';
 import { isMobile } from 'react-device-detect';
 import Confetti from 'react-confetti';
 import './Imagedisplay.css';
+import axios from 'axios';
 import jsonData from './images.json';
+import { useNavigate } from 'react-router-dom';
 
 const ItemTypes = {
   IMAGE: 'image',
@@ -63,6 +65,8 @@ const Imagedisplay = () => {
   const [matchedValues, setMatchedValues] = useState([]);
   const [showConfetti, setShowConfetti] = useState(false);
   const [tries, setTries] = useState(0);
+  const [timer, setTimer] = useState(0);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const loadImages = async () => {
@@ -82,7 +86,6 @@ const Imagedisplay = () => {
         setMatchedKeys([]);
         setMatchedValues([]);
         setShowConfetti(false);
-        setTries(0);
       } else {
         console.error(`No data found for page ${currentPage}`);
       }
@@ -90,6 +93,16 @@ const Imagedisplay = () => {
 
     loadImages();
   }, [currentPage]);
+
+  useEffect(() => {
+    let startTime = new Date().getTime();
+    let timerInterval = setInterval(() => {
+      const currentTime = new Date().getTime();
+      const elapsedTimer = currentTime - startTime;
+      setTimer(elapsedTimer);
+    }, 1000);
+    return () => clearInterval(timerInterval);
+  }, []);
 
   const handleDrop = (draggedSrc, droppedSrc) => {
     setTries(prevTries => prevTries + 1);
@@ -110,8 +123,12 @@ const Imagedisplay = () => {
     }
   };
 
-  const logdata = () => {
-    console.log(tries);
+  const logdata = async() => {
+    localStorage.setItem('tries', tries);
+    localStorage.setItem('timer', timer);
+    const response = await axios.post('https://jwlgamesbackend.vercel.app/api/caretaker/sendgamedata',{gameId:4,tries:tries,timer:timer,status:true});
+    console.log(response);
+    navigate('/result');
   };
 
   return (
