@@ -6,7 +6,7 @@ import { isMobile } from 'react-device-detect';
 import Confetti from 'react-confetti';
 import './Imagedisplay.css';
 import axios from 'axios';
-import jsonData from './images.json';
+import jsonData from '../assets/images.json';
 import { useNavigate } from 'react-router-dom';
 
 const ItemTypes = {
@@ -75,8 +75,8 @@ const Imagedisplay = () => {
         const loadedData = {};
         await Promise.all(
           Object.entries(pageData).map(async ([key, value]) => {
-            const importedKey = await import(`${key}`);
-            const importedValue = await import(`${value}`);
+            const importedKey = await import(`../assets/images/${key}.png`);
+            const importedValue = await import(`../assets/images/${value}.png`);
             loadedData[importedKey.default] = importedValue.default;
           })
         );
