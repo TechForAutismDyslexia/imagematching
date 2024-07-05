@@ -1,0 +1,32 @@
+{
+    "1":{
+        "boat":"boatshadow",
+        "jarshadow":"jarshadow",
+        "a3":"a3",
+        "a4":"a4"
+    },
+    "2":{
+        "a1":"a1",
+        "a2":"a2",
+        "bell":"bellshadow",
+        "bottle":"bottleshadow"
+    },
+    "3":{
+        "bulb":"bulbshadow",
+        "fruit":"fruitshadow",
+        "giraffe":"giraffeshadow",
+        "guitar":"guitarshadow"
+    },
+    "4":{
+        "icecream":"icecreamshadow",
+        "rollerskate":"rollerskateshadow",
+        "shoe":"shoeshadow",
+        "shooter":"shootershadow"
+    },
+    "5":{
+        "snowman":"snowmanshadow",
+        "tower":"towershadow",
+        "a3":"a3",
+        "a4":"a4"
+    }
+}
