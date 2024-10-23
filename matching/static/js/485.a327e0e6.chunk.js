@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkimagesdnd=self.webpackChunkimagesdnd||[]).push([[485],{485:(e,s,a)=>{e.exports=a.p+"static/media/guitar.9dccc4522b786b606d22.png"}}]);

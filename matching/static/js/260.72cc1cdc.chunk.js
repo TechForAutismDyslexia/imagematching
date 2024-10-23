@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkimagesdnd=self.webpackChunkimagesdnd||[]).push([[260],{260:(e,s,c)=>{e.exports=c.p+"static/media/tower.7c8404cc4396bac68702.png"}}]);

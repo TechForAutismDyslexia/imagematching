@@ -6,7 +6,6 @@ import { isMobile } from 'react-device-detect';
 import Confetti from 'react-confetti';
 import './Imagedisplay.css';
 import axios from 'axios';
-import jsonData from '../assets/images.json';
 import { useNavigate } from 'react-router-dom';
 
 const ItemTypes = {
@@ -69,29 +68,35 @@ const Imagedisplay = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const loadImages = async () => {
-      const pageData = jsonData[currentPage];
-      if (pageData) {
-        const loadedData = {};
-        await Promise.all(
-          Object.entries(pageData).map(async ([key, value]) => {
-            const importedKey = await import(`../assets/images/${key}.png`);
-            const importedValue = await import(`../assets/images/${value}.png`);
-            loadedData[importedKey.default] = importedValue.default;
-          })
-        );
-        setData(loadedData);
-        setKeys(shuffleArray(Object.keys(loadedData)));
-        setValues(shuffleArray(Object.values(loadedData)));
-        setMatchedKeys([]);
-        setMatchedValues([]);
-        setShowConfetti(false);
-      } else {
-        console.error(`No data found for page ${currentPage}`);
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('http://localhost:5000/api/games/6718c58adc6207cc23ff466a');
+        const fetchedData = response.data.items[currentPage];
+        
+        if (fetchedData) {
+          const loadedData = {};
+          await Promise.all(
+            fetchedData.map(async (item) => {
+              const importedKey = await import(`../assets/images/${item.key}.png`);
+              const importedValue = await import(`../assets/images/${item.value}.png`);
+              loadedData[importedKey.default] = importedValue.default;
+            })
+          );
+          setData(loadedData);
+          setKeys(shuffleArray(Object.keys(loadedData)));
+          setValues(shuffleArray(Object.values(loadedData)));
+          setMatchedKeys([]);
+          setMatchedValues([]);
+          setShowConfetti(false);
+        } else {
+          console.error(`No data found for page ${currentPage}`);
+        }
+      } catch (error) {
+        console.error("Error fetching game data:", error);
       }
     };
 
-    loadImages();
+    fetchData();
   }, [currentPage]);
 
   useEffect(() => {
@@ -116,19 +121,38 @@ const Imagedisplay = () => {
   };
 
   const handleNextPage = () => {
-    if (currentPage < Object.keys(jsonData).length) {
+    if (currentPage < Object.keys(data).length) {
       setKeys([]);
       setValues([]);
       setCurrentPage((prevPage) => prevPage + 1);
     }
   };
 
-  const logdata = async() => {
-    localStorage.setItem('tries', tries);
-    localStorage.setItem('timer', timer);
-    const response = await axios.post('https://jwlgamesbackend.vercel.app/api/caretaker/sendgamedata',{gameId:4,tries:tries,timer:timer,status:true});
-    console.log(response);
-    navigate('/result');
+  const logdata = async () => {
+    console.log('Tries:', tries);
+    console.log('Timer:', timer);
+    try {
+      localStorage.setItem('tries', tries);
+      localStorage.setItem('timer', timer);
+      const gameId = localStorage.getItem('gameId');
+      const childId = localStorage.getItem('childId');
+      const fixtimer = timer / 1000;
+      const token = localStorage.getItem('logintoken');
+      const response = await axios.put(`https://jwlgamesbackend.vercel.app/api/caretaker/${gameId}/${childId}`, {
+        tries,
+        timer: fixtimer,
+        status: true,
+      }, {
+        headers: {
+          "Authorization": `${token}`
+        }
+      });
+
+      console.log(response);
+      navigate('/result');
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   return (
@@ -163,7 +187,7 @@ const Imagedisplay = () => {
           </div>
         </div>
         {showConfetti && <Confetti width={window.innerWidth} height={window.innerHeight} />}
-        {currentPage < Object.keys(jsonData).length ? (
+        {currentPage < Object.keys(data).length ? (
           <div className='d-flex justify-content-center align-items-center'>
             <button onClick={handleNextPage} id='nextbutton' className="btn btn-custom mt-2">
               Next

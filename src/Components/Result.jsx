@@ -1,6 +1,6 @@
 import React from 'react'
 import './Result.css'
-export default function Result({tries,timer}) {
+export default function Result() {
   return (
     <div className='main container mt-5 flex justify-content-center align-items-center'>
         <h1>Result Page</h1>

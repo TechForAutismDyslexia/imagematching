@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkimagesdnd=self.webpackChunkimagesdnd||[]).push([[317],{317:(e,a,s)=>{e.exports=s.p+"static/media/fruit.108e9504a96f4a4138ac.png"}}]);

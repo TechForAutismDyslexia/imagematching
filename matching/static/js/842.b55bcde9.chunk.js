@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkimagesdnd=self.webpackChunkimagesdnd||[]).push([[842],{842:(e,s,c)=>{e.exports=c.p+"static/media/icecream.163688d228f3cc6b3e99.png"}}]);
