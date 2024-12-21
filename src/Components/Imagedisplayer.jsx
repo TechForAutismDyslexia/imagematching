@@ -70,7 +70,7 @@ const Imagedisplay = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/games/6718c58adc6207cc23ff466a');
+        const response = await axios.get('https://api.joywithlearning.com/api/imagematching/games/6718c58adc6207cc23ff466a');
         const fetchedData = response.data.items[currentPage];
         
         if (fetchedData) {
